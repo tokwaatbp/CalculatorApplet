@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JApplet;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 //This is a simple calculator applet that
@@ -19,6 +20,11 @@ public class CalcuApplet extends JApplet implements ActionListener
    
     private JTextField displayText = new JTextField(30);
     private JButton[] button = new JButton[16];
+    private JButton about = new JButton("About");
+    
+    String str;
+    
+    private aboutButtonHandler abHandler;
     
     private String[] keys = {"7", "8", "9", "/",
                              "4", "5", "6", "*",
@@ -35,24 +41,25 @@ public class CalcuApplet extends JApplet implements ActionListener
     public CalcuApplet()
     {
 
-        
-        
         Container pane = getContentPane();
 
         pane.setLayout(null);
+        
+        about.setSize(200, 30);
+        about.setLocation(10, 160);
+        about.setVisible(true);
+        abHandler = new aboutButtonHandler();
+        about.addActionListener(abHandler);
+        pane.add(about);
 
         displayText.setSize(200, 30);
         displayText.setLocation(10, 10);
         pane.add(displayText);
-
+       
         int x, y;
         x = 10;
         y = 40;
         
-    
-    
-
-
     for (int ind = 0; ind < 16; ind++)
     {
         button[ind] = new JButton(keys[ind]);
@@ -83,16 +90,16 @@ public void actionPerformed(ActionEvent e)
     switch (ch)
     {
     
-case '0':
-case '1':
-case '2':
-case '3':
-case '4':
-case '5':
-case '6':
-case '7':
-case '8':
-case '9':
+    case '0':
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+    case '9':
 
 if (firstInput)
 {
@@ -188,11 +195,26 @@ catch (NumberFormatException e)
         return "E R R O R: Invalid Second Number";
 }
 
-catch ( Exception e)
+catch (Exception e)
 {
     System.out.print(beep);
     return "E R R O R";
 }
+}
+
+private class aboutButtonHandler implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            str = "Calculator v1.0b" + "\n" +
+                    "Email: info.wildebeest@gmail.com" + "\n" +
+                    "Website: codewildebeest.wordpress.com" + "\n" +
+                    "Facebook: Tofu Etc";
+            
+            JOptionPane.showMessageDialog(null, str, "About", +
+                                       JOptionPane.INFORMATION_MESSAGE);
+            
+        }
 }
 
  public void init()
